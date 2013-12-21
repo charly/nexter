@@ -19,13 +19,12 @@ nexter.next
 
 ## Use Case Full Stack
 
-It helps you cycle consistentely through each record of any filtered collection instead of helplessly hit the back button of your browser to find the next item of your search. It plays well with gem which keeps the state of an `ActiveRelation` like [siphon](https://github.com/charly/siphon), [ransack](https://github.com/activerecord-hackery/ransack), [has_scope](https://github.com/plataformatec/has_scope) & others.
+It helps you cycle consistentely through each record of any filtered collection instead of helplessly hit the back button of your browser to find the next item of your search. It plays well with gem which keeps the state of an `ActiveRelation like [siphon](https://github.com/charly/siphon), [ransack](https://github.com/activerecord-hackery/ransack), [has_scope](https://github.com/plataformatec/has_scope) & others.
 
 ```ruby
 class Book
   def nexter=(relation)
-    @collection = relation.result
-    @nexter = Nexter.wrap(@collection, self)
+    @nexter = Nexter.wrap(relation, self)
   end
 
   def next
