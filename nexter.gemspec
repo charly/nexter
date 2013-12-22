@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Nexter::VERSION
   spec.authors       = ["Charles Sistovaris"]
   spec.email         = ["charlysisto@gmail.com"]
-  spec.description   = %q{What is Nexter ? A misspelled tv show or a killer feature ? Almost : it wraps your model with an ordered scope and cuts out the _next_ and _previous_ record. It also works with associations nested columns.}
+  spec.description   = %q{What is Nexter ? A misspelled tv show or a killer feature ? Almost : it wraps your model with an ordered scope and cuts out the next and previous record. It also works with associations & nested columns.}
   spec.summary       = %q{Wrap your model with an ordered scope and cut out the _next_ and _previous_ record.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/charly/nexter"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
