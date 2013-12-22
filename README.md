@@ -12,7 +12,7 @@ What is Nexter ? A misspelled tv show or a killer feature ? Not sure but it wrap
 @books = Book.includes(:author).bestsellers.
               order("genre", "authors.name", "published_at desc")
 
-nexter = Nexter.wrap( @books.find(56), @books )
+nexter = Nexter.wrap( @books, @books.find(params[:id]) )
 nexter.previous
 nexter.next
 ```
