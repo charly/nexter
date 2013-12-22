@@ -28,11 +28,11 @@ class Book
   end
 
   def next
-    @nexter.next
+    @nexter.next || self
   end
 
   def previous
-    @nexter.previous
+    @nexter.previous || self
   end
 end
 ```

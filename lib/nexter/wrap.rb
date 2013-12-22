@@ -22,11 +22,11 @@ module Nexter
     end
 
     def next
-      after.first || relation.first
+      after.first
     end
 
     def previous
-      before.first || relation.last
+      before.first
     end
 
 
