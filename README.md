@@ -1,5 +1,7 @@
 # Nexter
 
+[![Build Status](https://travis-ci.org/charly/nexter.png?branch=master)](https://travis-ci.org/charly/nexter)
+
 What is Nexter ? A misspelled tv show or a killer feature ? Not sure but it wraps your ActiveRecord model with an ordered scope and consistently cuts out the _next_ and _previous_ records. It also works with associations & nested columns : `order("books.genre, authors.name, published_at desc")` 
 
 ## Installation
