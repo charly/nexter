@@ -1,6 +1,10 @@
 module Nexter
   class Wrap
 
+    # the gui concatenating strings
+    attr_reader :derange
+
+    # the current model & the scope
     attr_reader :model, :relation
 
     # extracted values from the relation
@@ -19,6 +23,7 @@ module Nexter
       @associations = relation.includes_values
       # @cursor_column = extract_attr( @ranges.pop )
       # @cursor = model.send( @cursor_column.to_sym, )
+      @derange = Nexter::Derange.new(model)
     end
 
     def next
@@ -52,16 +57,13 @@ module Nexter
 
       while order_col = order_vals.pop do
 
-        inrange_of = order_vals.map {|col| "#{col[0]} = '#{value_of(col[0])}'"}.join(' AND ')
-        inrange_of = "#{inrange_of} AND" unless inrange_of.blank?
+        derange.columns = order_vals
+        derange.delimiter = order_col[0]
+        derange.direction = order_col[1]
+        derange.sign      = signature(derange.direction, goto)
 
-        direction = order_col[1]
-        sign      = signature(direction, goto)
-
-        bigger_than  = "#{order_col[0]} #{get_bracket(sign)} '#{value_of(order_col[0])}'"
-
-        wheres << "( #{inrange_of} #{bigger_than} )"
-        reorders.unshift(" #{order_col[0]} #{get_direction(sign)}")
+        wheres << "( #{derange.trunk} #{derange.bigger_than} )"
+        reorders.unshift(" #{order_col[0]} #{get_direction(derange.sign)}")
       end
     end
 
@@ -69,22 +71,8 @@ module Nexter
       sign = DIREC[dir.to_sym] * GOTO[goto]
     end
 
-    def get_bracket(sign)
-      sign == -1 ? '<' : '>'
-    end
-
     def get_direction(sign)
       sign == -1 ? 'desc' : 'asc'
-    end
-
-    def value_of(cursor)
-      splits = cursor.split(".")
-      if splits.first == model.class.table_name || splits.size == 1
-        model.send(splits.last)
-      else
-        asso = model.reflections.keys.grep(/#{splits.first.singularize}/).first
-        model.send(asso).send(splits.last)
-      end
     end
 
     # helper to turn mixed order attributes to a consistant

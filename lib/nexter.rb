@@ -4,6 +4,7 @@ require "active_support/core_ext"
 
 require "nexter/version"
 require "nexter/wrap"
+require "nexter/derange"
 
 
 module Nexter
