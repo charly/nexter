@@ -1,2 +1,2 @@
 require "nexter"
-require "../spec/book"
+require "./spec/book"
