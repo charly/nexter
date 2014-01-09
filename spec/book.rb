@@ -1,6 +1,8 @@
-Author = Struct.new(:b)
+Author = Struct.new(:name)
 
-Book = Struct.new(:a, :b, :c) do
+Book = Struct.new(:genre, :name, :title) do
+
+  def id; 71; end
 
   def self.table_name
     "books"
@@ -19,7 +21,7 @@ class Relation
   attr_accessor :order_values, :includes_values
 
   def order_values
-    @order_values ||= ["books.a", "authors.b", "books.c"]
+    @order_values ||= ["books.genre", "authors.name", "books.title"]
   end
 
   def includes_values
