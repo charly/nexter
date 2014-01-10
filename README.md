@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/nexter.png)](http://badge.fury.io/rb/nexter)
 [![Build Status](https://travis-ci.org/charly/nexter.png?branch=master)](https://travis-ci.org/charly/nexter)
 
-What is Nexter ? A misspelled tv show or a killer feature ? Not sure but it wraps your ActiveRecord model with an ordered scope and consistently cuts out the _next_ and _previous_ records. It also works with associations & nested columns : `order("books.genre, authors.name, published_at desc")` 
+What is Nexter ? A misspelled tv show or a killer feature ? Not sure but it wraps your ActiveRecord model with an ordered scope and consistently cuts out the _next_ and _previous_ records. It also works with associations & nested columns : `Book.order("books.genre, authors.name, published_at desc")` 
 
 ## Installation
 
@@ -23,15 +23,12 @@ nexter.next
 
 ## Rails Usage
 
-It helps you cycle consistentely through each record of any filtered collection instead of helplessly hit the back button of your browser to find the next item of your search. It plays well with gem which keeps the state of an `ActiveRelation like [siphon](https://github.com/charly/siphon), [ransack](https://github.com/activerecord-hackery/ransack), [has_scope](https://github.com/plataformatec/has_scope) & others.
+It helps you cycle consistentely through each record of any filtered collection instead of helplessly hit the back button of your browser to find the next item of your search. It plays well with gem which keeps the state of an `ActiveRelation` like [siphon](https://github.com/charly/siphon), [ransack](https://github.com/activerecord-hackery/ransack) & others.
 
-### New way (edge)
+### New way (bleeding edge)
 
-With the new view helper no need to inject previous/next in the ActiveRecord model.
-However there's a few assumptions : 
-
-1. the formobject responds to result and returns an activerelation (like ransack does)
-2. the formobject responds to params and returns those persisting the activerelation
+With the new view helper `nexter` no need to inject previous/next in the ActiveRecord model.
+However there's an assumptions : the formobject responds to `result` and returns an activerelation (like ransack does)
 
 ```ruby
 class BookController
@@ -46,9 +43,9 @@ end
 
 ```erb
 <%- nexter @book, @book_search do |book| %>
-  <%= link_to "previous",   book.path([:edit, :admin, @book.previous]) %>
+  <%= link_to "previous",   book.path([:edit, :admin, book.previous]) %>
   <%= link_to "collection", book.path([:admin, @book.class]) %>
-  <%= link_to "next",       book.path([:edit, :admin, @book.next])
+  <%= link_to "next",       book.path([:edit, :admin, book.next])
 ```
 
 ### Old way (still applies but verbose)

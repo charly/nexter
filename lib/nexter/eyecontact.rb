@@ -29,8 +29,8 @@ module Nexter
       @search_form = search_form
       @view = view
 
-      # extract values from form object
-      extract_formobject_values
+      set_relation
+      set_params
 
       @nexter = Nexter.wrap( relation, model )
     end
@@ -40,14 +40,15 @@ module Nexter
     end
 
 
-    private
+  private
 
-    def extract_formobject_values
-      #raise an exception if formobj doesn't comply to contract
-      @param_key = @search_form.class.model_name.param_key
-      @param_values = @search_form.params
+    def set_relation
       @relation = @search_form.result
-      @params = {@param_key => @param_values}
+    end
+
+    def set_params
+      param_key = @search_form.class.model_name.param_key
+      @params = view.params.select {|k, v| k == param_key}
     end
   end
 end
