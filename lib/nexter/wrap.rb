@@ -1,9 +1,6 @@
 module Nexter
   class Wrap
 
-    # the gui concatenating strings
-    attr_reader :derange
-
     # the current model & the scope
     attr_reader :model, :relation
 
@@ -23,7 +20,6 @@ module Nexter
       @associations = relation.includes_values
       # @cursor_column = extract_attr( @ranges.pop )
       # @cursor = model.send( @cursor_column.to_sym, )
-      @derange = Nexter::Derange.new(model)
     end
 
     def next
@@ -54,6 +50,8 @@ module Nexter
       order_vals = @order_values.dup
       @wheres = []
       @reorders = []
+      derange = Nexter::Derange.new(model)
+
 
       while order_col = order_vals.pop do
 
