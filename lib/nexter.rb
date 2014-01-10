@@ -1,10 +1,12 @@
 require "bundler/setup"
 
 require "active_support/core_ext"
+require "active_support/dependencies"
 
 require "nexter/version"
 require "nexter/wrap"
 require "nexter/derange"
+require "nexter/eyecontact"
 
 
 module Nexter
