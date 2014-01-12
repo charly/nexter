@@ -10,8 +10,6 @@ module Nexter
     # list of build strings for finale SQL
     attr_reader :wheres, :reorders
 
-    DIREC  = {asc: 1, desc: -1}
-    GOTO = {next: 1, previous: -1}
 
     def initialize(relation, model)
       @relation = relation
@@ -30,10 +28,13 @@ module Nexter
       before.first
     end
 
-
     def after
       cut(:next)
       relation.where( wheres.join(' OR ') )
+      # derange = cut(:next)
+      # r = relation.where( wheres.join(' OR ') )
+      # r = r.order(:id) if derange.reorder
+      # r
     end
 
     def before
@@ -50,27 +51,17 @@ module Nexter
       order_vals = @order_values.dup
       @wheres = []
       @reorders = []
-      derange = Nexter::Derange.new(model)
-
+      derange = Nexter::Derange.new(model, goto)
 
       while order_col = order_vals.pop do
+        derange.set_vals(order_vals, order_col)
 
-        derange.columns = order_vals
-        derange.delimiter = order_col[0]
-        derange.direction = order_col[1]
-        derange.sign      = signature(derange.direction, goto)
-
-        wheres << "( #{derange.trunk} #{derange.bigger_than} )"
-        reorders.unshift(" #{order_col[0]} #{get_direction(derange.sign)}")
+        # should be derange's result
+        wheres << "( #{derange.trunk} #{derange.slice} )"
+        reorders.unshift(" #{derange.delimiter} #{derange.relative_dir}")
       end
-    end
 
-    def signature(dir, goto)
-      sign = DIREC[dir.to_sym] * GOTO[goto]
-    end
-
-    def get_direction(sign)
-      sign == -1 ? 'desc' : 'asc'
+      derange
     end
 
     # helper to turn mixed order attributes to a consistant

@@ -12,7 +12,6 @@ describe Nexter::Wrap do
         nexter.after
 
         expect(nexter.wheres[0]).to eq("( authors.name = 'nabokov' AND title > 'ada' )")
-        expect(nexter.wheres[1]).to eq("(  authors.name > 'nabokov' )")
       end
     end
 
