@@ -12,7 +12,7 @@ module Nexter
       return false
     end
 
-    ::ActionView::Base.send(:include, self)
+    ::ActionView::Base.send(:include, self) if defined?(Rails)
   end
 
   class Retina
