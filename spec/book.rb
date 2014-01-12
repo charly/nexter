@@ -1,5 +1,3 @@
-Author = Struct.new(:name)
-
 Book = Struct.new(:genre, :name, :title) do
 
   def id; 71; end
@@ -13,7 +11,8 @@ Book = Struct.new(:genre, :name, :title) do
   end
 
   def author
-    Author.new("nabokov")
+    a = Struct.new(:name)
+    a.new(name)
   end
 end
 
@@ -33,6 +32,10 @@ class Relation
   end
 
   def reorder(args)
+    self
+  end
+
+  def order(args)
     self
   end
 
