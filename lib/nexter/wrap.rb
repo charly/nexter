@@ -29,12 +29,10 @@ module Nexter
     end
 
     def after
-      cut(:next)
-      relation.where( wheres.join(' OR ') )
-      # derange = cut(:next)
-      # r = relation.where( wheres.join(' OR ') )
-      # r = r.order(:id) if derange.reorder
-      # r
+      derange = cut(:next)
+      r = relation.where( wheres.join(' OR ') )
+      r = r.order(:id) if derange.reorder
+      r
     end
 
     def before

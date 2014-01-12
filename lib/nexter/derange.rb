@@ -46,14 +46,13 @@ module Nexter
 
     def slice
       if delimiter_value = value_of(delimiter)
-        "#{delimiter} #{get_bracket(sign)} '#{delimiter_value}'"
-        # delimited = "#{delimiter} #{get_bracket(sign)} '#{delimiter_value}'"
-        # if @columns.blank?
-        #   delimited = delimited + " OR #{delimiter} IS NULL"
-        # end
-        # delimited
+        delimited = "#{delimiter} #{get_bracket(sign)} '#{delimiter_value}'"
+        if @columns.blank?
+          delimited = delimited + " OR #{delimiter} IS NULL"
+        end
+        delimited
       else
-        # @reorder = true
+        @reorder = true
         "#{delimiter} IS NULL AND #{table_name}.id > #{model.id}"
       end
     end
