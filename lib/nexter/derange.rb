@@ -1,14 +1,11 @@
 module Nexter
   class Derange
 
-    attr_reader :model, :table_name, :reorder
+    attr_reader :model, :compass, :table_name, :reorder
 
-    attr_accessor :delimiter, :columns
+    attr_accessor :delimiter, :columns, :trunks
 
-    attr_accessor :sign, :direction, :trunks, :relative_dir
-
-    DIREC  = {asc: 1, desc: -1}
-    GOTO = {next: 1, previous: -1}
+    delegate :goto, :bracket, :redirection, to: :compass
 
 
     def initialize(model, goto = :next)
@@ -16,15 +13,13 @@ module Nexter
       @table_name = model.class.table_name
       @trunks = []
       @reorder = false
-      @goto = goto
+      @compass = Nexter::Compass.new(goto)
     end
 
     def set_vals(order_vals, order_col)
       @columns = order_vals
       @delimiter = order_col[0]
-      @direction = order_col[1]
-      @sign      = signature(direction, @goto)
-      @relative_dir = get_direction(sign)
+      compass.direction = order_col[1]
     end
 
     def trunk
@@ -46,9 +41,9 @@ module Nexter
 
     def slice
       if delimiter_value = value_of(delimiter)
-        delimited = "#{delimiter} #{get_bracket(sign)} '#{delimiter_value}'"
+        delimited = "#{delimiter} #{bracket} '#{delimiter_value}'"
         if @columns.blank?
-          delimited = delimited + " OR #{delimiter} IS NULL"
+          delimited += " OR #{delimiter} IS NULL"
         end
         delimited
       else
@@ -56,19 +51,6 @@ module Nexter
         "#{delimiter} IS NULL AND #{table_name}.id > #{model.id}"
       end
     end
-
-    def get_bracket(sign)
-      sign == -1 ? '<' : '>'
-    end
-
-    def signature(dir, goto)
-      sign = DIREC[dir.to_sym] * GOTO[goto]
-    end
-
-    def get_direction(sign)
-      sign == -1 ? 'desc' : 'asc'
-    end
-
 
     def value_of(cursor)
       splits = cursor.split(".")

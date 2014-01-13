@@ -6,7 +6,7 @@ require "active_support/dependencies"
 require "nexter/version"
 require "nexter/wrap"
 require "nexter/derange"
-require "nexter/eyecontact"
+require "nexter/compass"
 
 
 module Nexter

@@ -56,7 +56,7 @@ module Nexter
 
         # should be derange's result
         wheres << "( #{derange.trunk} #{derange.slice} )"
-        reorders.unshift(" #{derange.delimiter} #{derange.relative_dir}")
+        reorders.unshift(" #{derange.delimiter} #{derange.redirection}")
       end
 
       derange
