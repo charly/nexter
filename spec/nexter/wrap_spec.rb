@@ -11,7 +11,7 @@ describe Nexter::Wrap do
         nexter = Nexter::Wrap.new(relation, book)
         nexter.after
 
-        expect(nexter.wheres[0]).to eq("( authors.name = 'nabokov' AND title > 'ada' )")
+        expect(nexter.wheres[0]).to eq("(authors.name = 'nabokov' AND title > 'ada')")
       end
     end
 
@@ -20,7 +20,7 @@ describe Nexter::Wrap do
         nexter = Nexter::Wrap.new(relation, book)
         nexter.before
 
-        expect(nexter.wheres[0]).to eq("( authors.name = 'nabokov' AND title < 'ada' )")
+        expect(nexter.wheres[0]).to eq("(authors.name = 'nabokov' AND title < 'ada')")
       end
 
       it "has the right SQL order by" do
@@ -42,7 +42,7 @@ describe Nexter::Wrap do
         nexter = Nexter::Wrap.new(relation, book)
         nexter.after
 
-        expect(nexter.wheres[0]).to eq("( genre IS NULL AND title > 'Ada' )")
+        expect(nexter.wheres[0]).to eq("(genre IS NULL AND title > 'Ada')")
       end
     end
 
@@ -53,7 +53,7 @@ describe Nexter::Wrap do
         nexter = Nexter::Wrap.new(relation, book)
         nexter.after
 
-        expect(nexter.wheres[0]).to eq("( genre = 'novel' AND title IS NULL AND books.id > #{book.id} )")
+        expect(nexter.wheres[0]).to eq("(genre = 'novel' AND title IS NULL AND books.id > #{book.id})")
       end
     end
 

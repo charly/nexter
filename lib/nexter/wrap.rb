@@ -14,7 +14,7 @@ module Nexter
     def initialize(relation, model)
       @relation = relation
       @model = model
-      @order_values = arrayize( relation.order_values )
+      @order_values = parse_order( relation.order_values )
       @associations = relation.includes_values
       # @cursor_column = extract_attr( @ranges.pop )
       # @cursor = model.send( @cursor_column.to_sym, )
@@ -55,15 +55,15 @@ module Nexter
         derange.set_vals(order_vals, order_col)
 
         # should be derange's result
-        wheres << "( #{derange.trunk} #{derange.slice} )"
-        reorders.unshift(" #{derange.delimiter} #{derange.redirection}")
+        wheres << derange.where
+        reorders.unshift(derange.reorder)
       end
 
       derange
     end
 
     # helper to turn mixed order attributes to a consistant
-    def arrayize(array)
+    def parse_order(array)
       array.join(",").split(",").map(&:strip).map do |column|
         splits = column.split(" ").map(&:strip).map(&:downcase)
         splits << "asc" if splits.size == 1

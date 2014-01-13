@@ -22,11 +22,12 @@ module Nexter
       compass.direction = order_col[1]
     end
 
-    def trunk
-      raise unless columns
-      trunk = range
-      trunks << trunk
-      "#{trunk} AND" unless trunk.blank?
+    def where
+      "(#{range} #{range.blank? ? '' : 'AND'} #{slice})"
+    end
+
+    def reorder
+      " #{delimiter} #{redirection}"
     end
 
     def range
