@@ -8,11 +8,12 @@ module Nexter
     delegate :goto, :bracket, :redirection, to: :compass
 
 
-    def initialize(model, goto = :next)
+    def initialize(model, goto)
       @model = model
       @table_name = model.class.table_name
       @trunks = []
       @reorder = false
+      @or_null = false
       @compass = Nexter::Compass.new(goto)
     end
 
@@ -43,7 +44,7 @@ module Nexter
     def slice
       if delimiter_value = value_of(delimiter)
         delimited = "#{delimiter} #{bracket} '#{delimiter_value}'"
-        if @columns.blank?
+        if @columns.blank? && @or_null
           delimited += " OR #{delimiter} IS NULL"
         end
         delimited

@@ -8,7 +8,7 @@ describe Nexter::Derange do
 
     describe "#range" do
       it "returns a range of rows related to the current model (book)" do
-        derange = Nexter::Derange.new(book)
+        derange = Nexter::Derange.new(book, :next)
         derange.columns = nexter.order_values.tap(&:pop)
 
         expect(derange.range).to eq("books.genre = 'novel' AND authors.name = 'nabokov'")
@@ -16,7 +16,7 @@ describe Nexter::Derange do
 
       it "handles nil values" do
         book.genre = nil
-        derange = Nexter::Derange.new(book)
+        derange = Nexter::Derange.new(book, :next)
         derange.columns = nexter.order_values.tap(&:pop)
 
         expect(derange.range).to eq("books.genre IS NULL AND authors.name = 'nabokov'")
@@ -24,7 +24,7 @@ describe Nexter::Derange do
 
       it "handles nil values (just for peace of mind)" do
         book.name = nil
-        derange = Nexter::Derange.new(book)
+        derange = Nexter::Derange.new(book, :next)
         derange.columns = nexter.order_values.tap(&:pop)
 
         expect(derange.range).to eq("books.genre = 'novel' AND authors.name IS NULL")
@@ -33,7 +33,7 @@ describe Nexter::Derange do
 
     describe "#slice" do
       it "returns a range of rows related to the current model (book)" do
-        derange = Nexter::Derange.new(book)
+        derange = Nexter::Derange.new(book, :next)
         order_col = nexter.order_values.pop
         derange.set_vals(nexter.order_values, order_col)
 
@@ -42,7 +42,7 @@ describe Nexter::Derange do
 
       it "handles nil values" do
         book.title = nil
-        derange = Nexter::Derange.new(book)
+        derange = Nexter::Derange.new(book, :next)
         order_col = nexter.order_values.pop
         derange.set_vals(nexter.order_values, order_col)
 
