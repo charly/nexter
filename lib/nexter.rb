@@ -7,6 +7,7 @@ require "nexter/version"
 require "nexter/wrap"
 require "nexter/derange"
 require "nexter/compass"
+require "nexter/eyecontact"
 
 
 module Nexter
