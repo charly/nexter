@@ -42,10 +42,10 @@ end
 ```
 
 ```erb
-<%- nexter @book, @book_search do |book| %>
-  <%= link_to "previous",   book.path([:edit, :admin, book.previous]) %>
-  <%= link_to "collection", book.path([:admin, @book.class]) %>
-  <%= link_to "next",       book.path([:edit, :admin, book.next])
+<%- nexter @book, @book_search do |b| %>
+  <%= link_to "previous",   b.path([:edit, :admin, (b.previous || @book)]) %>
+  <%= link_to "collection", b.path([:admin, Book]) %>
+  <%= link_to "next",       b.path([:edit, :admin, (b.next || @book)])
 ```
 
 ### Old way (still applies but verbose)
