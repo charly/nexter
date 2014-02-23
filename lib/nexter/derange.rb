@@ -53,6 +53,7 @@ module Nexter
         # @reorder = true
         "#{delimiter} IS NULL AND #{table_name}.id > #{model.id}"
       end
+      result.is_a?(String) ? result.gsub(/'/, "''") : result
     end
 
     def value_of(cursor)
