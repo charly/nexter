@@ -44,19 +44,20 @@ module Nexter
     def slice
       if delimiter_value = value_of(delimiter)
         delimited = "#{delimiter} #{bracket} '#{delimiter_value}'"
-        if @columns.blank? && @or_null
-          delimited += " OR #{delimiter} IS NULL"
-        end
+        # if @columns.blank? && @or_null
+        #   delimited += " OR #{delimiter} IS NULL"
+        # end
         delimited
+      # TODO : some serious debugging here !!!!!
       else
-        @reorder = true
+        # @reorder = true
         "#{delimiter} IS NULL AND #{table_name}.id > #{model.id}"
       end
     end
 
     def value_of(cursor)
       splits = cursor.split(".")
-      if splits.first == table_name || splits.size == 1
+      result = if splits.first == table_name || splits.size == 1
         model.send(splits.last)
       else
         asso = model.reflections.keys.grep(/#{splits.first.singularize}/).first

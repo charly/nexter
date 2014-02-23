@@ -20,6 +20,8 @@ module Nexter
       # @cursor = model.send( @cursor_column.to_sym, )
     end
 
+    # TODO : let user determine which strategy to choose:
+    # e.g: carousel or stay there
     def next
       after.first
     end
@@ -31,7 +33,7 @@ module Nexter
     def after
       derange = cut(:next)
       r = relation.where( wheres.join(' OR ') )
-      r = r.order(:id) if derange.reorder
+      # r = r.order(:id) if derange.reorder
       r
     end
 
