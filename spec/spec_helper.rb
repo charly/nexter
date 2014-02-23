@@ -7,7 +7,7 @@
 require "book"
 require "nexter"
 require "active_support"
-require "pry-rescue/rspec"
+# require "pry-rescue/rspec"
 
 
 RSpec.configure do |config|

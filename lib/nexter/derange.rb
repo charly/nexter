@@ -42,7 +42,7 @@ module Nexter
     end
 
     def slice
-      if delimiter_value = value_of(delimiter)
+      result = if delimiter_value = value_of(delimiter)
         delimited = "#{delimiter} #{bracket} '#{delimiter_value}'"
         # if @columns.blank? && @or_null
         #   delimited += " OR #{delimiter} IS NULL"
