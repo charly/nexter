@@ -42,18 +42,13 @@ module Nexter
     end
 
     def slice
-      result = if delimiter_value = value_of(delimiter)
-        delimited = "#{delimiter} #{bracket} '#{delimiter_value}'"
-        # if @columns.blank? && @or_null
-        #   delimited += " OR #{delimiter} IS NULL"
-        # end
-        delimited
-      # TODO : some serious debugging here !!!!!
+      if val = value_of(delimiter)
+        d = val.is_a?(String) ? val.gsub(/'/, "''") : val
+        delimited = "#{delimiter} #{bracket} '#{d}'"
       else
         # @reorder = true
         "#{delimiter} IS NULL AND #{table_name}.id > #{model.id}"
       end
-      result.is_a?(String) ? result.gsub(/'/, "''") : result
     end
 
     def value_of(cursor)
