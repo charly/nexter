@@ -56,7 +56,8 @@ module Nexter
       result = if splits.first == table_name || splits.size == 1
         model.send(splits.last)
       else
-        asso = model.reflections.keys.grep(/#{splits.first.singularize}/).first
+        # binding.pry
+        asso = model.class.reflections.keys.grep(/#{splits.first.singularize}/).first
         asso = model.send(asso) and asso.send(splits.last)
       end
     end
