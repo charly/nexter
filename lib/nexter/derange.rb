@@ -34,7 +34,8 @@ module Nexter
     def range
       trunk = columns.map do |col|
         if range_value = value_of(col[0])
-          "#{col[0]} = '#{range_value}'"
+          # binding.pry
+          "#{col[0]} = #{model.class.sanitize range_value}"
         else
           "#{col[0]} IS NULL"
         end
@@ -43,8 +44,8 @@ module Nexter
 
     def slice
       if val = value_of(delimiter)
-        d = val.is_a?(String) ? val.gsub(/'/, "''") : val
-        delimited = "#{delimiter} #{bracket} '#{d}'"
+        d = model.class.sanitize val
+        delimited = "#{delimiter} #{bracket} #{d}"
       else
         # @reorder = true
         "#{delimiter} IS NULL AND #{table_name}.id > #{model.id}"
