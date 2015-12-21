@@ -4,7 +4,20 @@ describe Nexter::Wrap do
   let(:relation) {Relation.new.tap{|r| r.order_values=["authors.name","genre","title"]}}
   let(:book)     {Book.new("novel", "nabokov", "ada")}
 
-  context "no missing values" do
+  describe "#map_column_values", focus: true do
+
+    it "should create hashes of attributes out of the order values" do
+      nexter = Nexter::Wrap.new(relation, book)
+
+      expect(nexter.map_column_values).to eq(
+        [ {col: "authors.name",  val: "nabokov", dir: "asc"},
+          {col: "genre",         val: "novel",   dir: "asc"},
+          {col: "title",         val: "ada",     dir: "asc"}
+        ])
+    end
+  end
+
+  context "no missing values", broken: true do
     let(:relation) { Relation.new.tap {|rel| rel.order_values=["authors.name", "title"]} }
     let(:book)     { Book.new("novel", "nabokov", "ada") }
 
@@ -34,7 +47,7 @@ describe Nexter::Wrap do
     end
   end
 
-  context "nil values" do
+  context "nil values", broken: true do
     let(:relation) {Relation.new.tap {|r| r.order_values=["genre", "title", "id"]} }
 
     describe "#wheres with Book#genre IS NULL" do

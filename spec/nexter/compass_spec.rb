@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Nexter::Compass do
+describe Nexter::Compass, focus: true do
 
   describe "#arrwo or #bracket" do
     context "when looking for *next*" do

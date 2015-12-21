@@ -7,17 +7,11 @@ module Nexter
     # extracted values from the relation
     attr_reader :order_values, :associations
 
-    # list of build strings for finale SQL
-    attr_reader :wheres, :reorders
-
-
     def initialize(relation, model)
       @relation = relation
       @model = model
       @order_values = parse_order( relation.order_values )
       @associations = relation.includes_values
-      # @cursor_column = extract_attr( @ranges.pop )
-      # @cursor = model.send( @cursor_column.to_sym, )
     end
 
     # TODO : let user determine which strategy to choose:
@@ -31,37 +25,31 @@ module Nexter
     end
 
     def after
-      derange = cut(:next)
-      r = relation.where( wheres.join(' OR ') )
-      # r = r.order(:id) if derange.reorder
-      r
+      query = Query.new(map_column_values, :next)
+      relation.where( query.wheres.join(' OR ') )
     end
 
     def before
-      cut(:previous)
-      relation.where( wheres.join(' OR ') ).reorder( reorders.join(", ") )
+      query = Query.new(map_column_values, :previous)
+      relation.where( query.wheres.join(' OR ') ).
+              reorder( query.reorders.join(", ") )
+    end
+
+    def map_column_values
+      @column_values ||= @order_values.map do |column|
+        {col: column[0], val: value_of(column[0]), dir: column[1]}
+      end
     end
 
   private
-    # model.order(a, b,c) loop
-    # 1. ( (a and b and c > c.val)
-    # 2. (a and b > b.val)
-    # 3. (a > a.val))
-    def cut(goto = :next)
-      order_vals = @order_values.dup
-      @wheres = []
-      @reorders = []
-      derange = Nexter::Derange.new(model, goto)
-
-      while order_col = order_vals.pop do
-        derange.set_vals(order_vals, order_col)
-
-        # should be derange's result
-        wheres << derange.where
-        reorders.unshift(derange.reorder)
+    def value_of(cursor)
+      splits = cursor.split(".")
+      result = if splits.first == model.class.table_name || splits.size == 1
+        model.send(splits.last) if model.respond_to?(splits.last)
+      else
+        asso = model.class.reflections.keys.grep(/#{splits.first.singularize}/).first
+        asso = model.send(asso) and asso.send(splits.last)
       end
-
-      derange
     end
 
     # helper to turn mixed order attributes to a consistant

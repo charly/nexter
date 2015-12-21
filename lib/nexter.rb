@@ -1,11 +1,14 @@
 require "bundler/setup"
 
-require "active_support/core_ext"
-require "active_support/dependencies"
+require "active_support/all"
+# require "active_support/dependencies"
 
 require "nexter/version"
 require "nexter/wrap"
-require "nexter/derange"
+require "nexter/query"
+require "nexter/query/section"
+require "nexter/query/direction"
+
 require "nexter/compass"
 require "nexter/eyecontact"
 

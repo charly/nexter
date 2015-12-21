@@ -14,17 +14,15 @@ module Nexter
     end
 
     def bracket
-      signature == -1 ? '<' : '>'
+      sign == -1 ? '<' : '>'
     end
 
     def redirection
-      signature == -1 ? 'desc' : 'asc'
+      sign == -1 ? 'DESC' : 'ASC'
     end
 
-    private
-
-    def signature
-      DIREC[direction.to_sym] * GOTO[goto]
+    def sign
+      DIREC[direction.downcase.to_sym] * GOTO[goto]
     end
   end
 end
