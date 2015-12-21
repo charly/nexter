@@ -1,13 +1,18 @@
 Book = Struct.new(:genre, :name, :title) do
 
+
   def id; 71; end
 
   def self.table_name
     "books"
   end
 
-  def reflections
-    {:author => "blurb"}
+  def self.sanitize(args)
+    "'#{args}'"
+  end
+
+  def self.reflections
+    {author: "blurb"}
   end
 
   def author

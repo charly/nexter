@@ -24,17 +24,24 @@ module Nexter
     end
 
     def where
-      "(#{range} #{range.blank? ? '' : 'AND'} #{slice})"
+      if slice
+        "(#{range} #{range.blank? ? '' : 'AND'} #{slice})"
+      end
     end
 
     def reorder
       " #{delimiter} #{redirection}"
     end
 
+    # Iterates over the columns, extracts their values
+    # and builds query part that says :
+    # > "col1 = value1"
+    # > "col2 = value2"
+    # then joins them with AND :
+    # > "col1 = value1 AND col2 = value2"
     def range
       trunk = columns.map do |col|
         if range_value = value_of(col[0])
-          # binding.pry
           "#{col[0]} = #{model.class.sanitize range_value}"
         else
           "#{col[0]} IS NULL"
@@ -46,9 +53,9 @@ module Nexter
       if val = value_of(delimiter)
         d = model.class.sanitize val
         delimited = "#{delimiter} #{bracket} #{d}"
-      else
-        # @reorder = true
-        "#{delimiter} IS NULL AND #{table_name}.id > #{model.id}"
+      elsif @compass.sign == -1
+          "#{delimiter} IS NOT NULL"
+        # "#{delimiter} IS NULL AND #{table_name}.id > #{model.id}"
       end
     end
 
@@ -57,7 +64,6 @@ module Nexter
       result = if splits.first == table_name || splits.size == 1
         model.send(splits.last)
       else
-        # binding.pry
         asso = model.class.reflections.keys.grep(/#{splits.first.singularize}/).first
         asso = model.send(asso) and asso.send(splits.last)
       end
