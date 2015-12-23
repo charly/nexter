@@ -5,7 +5,7 @@
 
 What is Nexter ? A misspelled tv show or a killer feature ? Not sure but it wraps your ActiveRecord model with an ordered scope and consistently cuts out the _next_ and _previous_ records. It also works with associations & nested columns : `Book.order("books.genre, authors.name, published_at desc")` 
 
-## Installation
+## Installation (RUBY 2)
 
     gem 'nexter'
     # (edge) gem 'nexter', git: 'https://github.com/charly/nexter'
