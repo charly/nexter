@@ -93,7 +93,7 @@ end
 - (docs) How it works
 - (feature) Joins ?
 - (docs) previous/next through ctrl (not preloaded)
-- (fix) for nil values you need a reorder with default delimiter
+x (fix) for nil values you need a reorder with default delimiter
 
 ## Contributing
 
