@@ -9,7 +9,7 @@ describe Nexter::Query::Direction do
     {col: "title",         val: "ada",     dir: "asc"}
   ]}
 
-  describe "#slice", focus: true do
+  describe "#slice" do
 
     it "should be awesome" do
       direction = Nexter::Query::Direction.new(columns.pop, compass)

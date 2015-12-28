@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Nexter::Query::Section, focus: true do
+describe Nexter::Query::Section do
 
   # let(:compass) {Nexter::Compass.new(:next)}
   let(:columns) {[

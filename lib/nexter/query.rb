@@ -5,12 +5,12 @@ module Nexter
     def initialize(columns, goto)
       @columns = columns
       @compass = Compass.new(goto)
-      @wheres = []
       @reorders = []
       iterate
     end
 
     def iterate
+      @wheres = []
       columns = @columns.dup
 
       while column = columns.pop do
