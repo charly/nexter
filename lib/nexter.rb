@@ -5,6 +5,8 @@ require "active_support/all"
 
 require "nexter/version"
 require "nexter/wrap"
+require "nexter/model"
+
 require "nexter/query"
 require "nexter/query/section"
 require "nexter/query/direction"
