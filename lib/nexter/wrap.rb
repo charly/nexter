@@ -1,10 +1,10 @@
 module Nexter
   class Wrap
     # the current model & the scope
-    attr_reader :model
+    attr_reader :model, :relation
 
     def initialize(relation, model)
-      order_values = parse_order( relation.order_values )
+      @relation = relation
       @model = Model.new(model, relation)
     end
 

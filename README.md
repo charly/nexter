@@ -25,7 +25,7 @@ nexter.next
 
 It helps you cycle consistentely through each record of any filtered collection instead of helplessly hit the back button of your browser to find the next item of your search. It plays well with gem which keeps the state of an `ActiveRelation` like [siphon](https://github.com/charly/siphon), [ransack](https://github.com/activerecord-hackery/ransack) & others.
 
-### New way (bleeding edge)
+### New way
 
 With the new view helper `nexter` no need to inject previous/next in the ActiveRecord model.
 However there's an assumptions : the formobject responds to `result` and returns an activerelation (like ransack does)
