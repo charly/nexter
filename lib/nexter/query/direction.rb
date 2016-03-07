@@ -11,7 +11,7 @@ class Nexter::Query
 
     def slice
       if column[:val].present?
-        delimited = "#{column[:col]} #{bracket} '#{column[:val]}'"
+        delimited = "#{column[:col]} #{bracket} #{quote(column[:val])}"
         delimited.concat(" OR #{column[:col]} IS NULL") if @compass.sign == 1
         "(#{delimited})"
       elsif @compass.sign == -1
@@ -19,6 +19,19 @@ class Nexter::Query
       end
     end
     alias sql slice
+
+    private
+    def quote(value)
+      if value.is_a?(Float)
+        @compass.sign == 1 ? value + 0.0001 : value - 0.0001
+      elsif value.is_a?(Integer)
+        value
+      else #value.is_a?(String)
+        "'#{value}'"
+      end
+    end
+
+
 
   end
 end

@@ -22,7 +22,7 @@ class Nexter::Query
     def iterate
       @where ||= columns.map do |column|
         if column[:val]
-          "#{column[:col]} = '#{column[:val]}'"
+          "#{column[:col]} = #{quote(column[:val])}"
         else
           "#{column[:col]} IS NULL"
         end
@@ -33,6 +33,20 @@ class Nexter::Query
     def blank?
       iterate.blank?
     end
+
+    private
+    def quote(value)
+      if value.is_a?(Integer)
+        value
+      # TODO: lookat numeric precision e.g.
+      #   round(vat::numeric, 2) = 19.66;
+      elsif value.is_a?(Float)
+        value
+      else #value.is_a?(String)
+        "'#{value}'"
+      end
+    end
+
 
   end #section
 end
