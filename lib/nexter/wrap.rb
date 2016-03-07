@@ -9,13 +9,13 @@ module Nexter
     end
 
     # TODO : let user determine which strategy to choose:
-    # e.g: carousel or stay there
+    # e.g: carousel or stay on last
     def next
-      after.first
+      @next||=after.first
     end
 
     def previous
-      before.first
+      @prev||=before.first
     end
 
     def after
