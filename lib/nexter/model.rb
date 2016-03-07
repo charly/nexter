@@ -5,7 +5,7 @@ module Nexter
 
     def initialize(model, relation)
       @model = model
-      @order_values = parse relation.order_values
+      @order_values = ParseOrder.parse(relation.order_values)
     end
 
     def values
@@ -18,7 +18,6 @@ module Nexter
     end
 
   private
-
     def value_of(cursor)
       splits = cursor.split(".")
       result = if splits.first == model.class.table_name || splits.size == 1
@@ -29,23 +28,5 @@ module Nexter
       end
     end
 
-    def parse(order_values)
-      order_values.map do |value|
-        value.is_a?(String) ? parse_string(value) : parse_arel(value)
-      end
-    end
-
-    # helper to turn mixed order attributes to a consistant
-    def parse_string(string)
-      string.split(",").map(&:strip).flat_map do |column|
-        splits = column.split(" ").map(&:strip).map(&:downcase)
-        splits << "asc" if splits.size == 1
-        splits
-      end
-    end
-
-    def parse_arel(arel)
-      ["#{arel.value.name}", "#{arel.direction}"]
-    end
   end
 end

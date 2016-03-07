@@ -6,6 +6,7 @@ require "active_support/all"
 require "nexter/version"
 require "nexter/wrap"
 require "nexter/model"
+require "nexter/model/parse_order"
 
 require "nexter/query"
 require "nexter/query/section"
