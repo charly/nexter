@@ -1,3 +1,8 @@
+## Nexter 0.2.1 (Mars 2016)
+
+* fixed non existing column problem with pg_search
+* Order parsing : arel consistent with string parsing
+
 ## Nexter 0.2.0 (Mars 2016)
 
 * properly do order parsing so it works with arel or plain string
