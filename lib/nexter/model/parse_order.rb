@@ -27,7 +27,7 @@ class Nexter::Model
     end
 
     def parse_arel(arel)
-      ["#{arel.value.name}", "#{arel.direction}"]
+      [["#{arel.value.name}", "#{arel.direction}"]]
     end
 
 
