@@ -16,6 +16,15 @@ describe Nexter::Model do
         {col: "title",         val: "ada",     dir: "asc"}
       ])
     end
+
+    it "should skip non existing columns (for now ?)" do
+      relation = Relation.new.tap{|r| r.order_values=["pg_search_8bf729ffe074caee622c02.rank","title"]}
+      model = Nexter::Model.new(book, relation)
+
+      expect(model.values).to eq([
+        {col: "title",         val: "ada",     dir: "asc"}
+      ])
+    end
   end
 
 

@@ -10,11 +10,12 @@ module Nexter
 
     def values
       @values ||= @order_values.map do |column|
+        next unless value = value_of(column[0])
         { col: column[0],
-          val: value_of(column[0]),
+          val: value,
           dir: column[1]
         }
-      end
+      end.compact
     end
 
   private
@@ -22,9 +23,10 @@ module Nexter
       splits = cursor.split(".")
       result = if splits.first == model.class.table_name || splits.size == 1
         model.send(splits.last) if model.respond_to?(splits.last)
-      else
-        asso = model.class.reflections.keys.grep(/#{splits.first.singularize}/).first
+      elsif asso = model.class.reflections.keys.grep(/#{splits.first.singularize}/).first
         asso = model.send(asso) and asso.send(splits.last)
+      else
+        false
       end
     end
 
