@@ -26,8 +26,10 @@ class Nexter::Query
         @compass.sign == 1 ? value + 0.0001 : value - 0.0001
       elsif value.is_a?(Integer)
         value
-      else #value.is_a?(String)
+      elsif value.is_a?(String)
         "'#{value.gsub("'", "")}'"
+      else #value.is_a?(String)
+        "'#{value}'"
       end
     end
 
