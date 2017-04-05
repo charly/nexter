@@ -43,7 +43,7 @@ class Nexter::Query
       elsif value.is_a?(Float)
         value
       else #value.is_a?(String)
-        "'#{value}'"
+        "'#{value.gsub("'", "")}'"
       end
     end
 

@@ -27,7 +27,7 @@ class Nexter::Query
       elsif value.is_a?(Integer)
         value
       else #value.is_a?(String)
-        "'#{value}'"
+        "'#{value.gsub("'", "")}'"
       end
     end
 
