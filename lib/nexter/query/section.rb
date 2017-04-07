@@ -36,7 +36,7 @@ class Nexter::Query
 
     private
     def quote(value)
-      if value.is_a?(Integer) ||
+      if value.is_a?(Integer)
         value
       # TODO: lookat numeric precision e.g.
       #   round(vat::numeric, 2) = 19.66;
